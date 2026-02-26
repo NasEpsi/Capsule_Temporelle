@@ -112,7 +112,7 @@ class MyCapsuleCard extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                   decoration: BoxDecoration(
                     color: const Color(0xFF7F9EA4),
-                    borderRadius: BorderRadius.circular(999),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Text(
                     "Bloqué",
@@ -233,7 +233,7 @@ class MyCapsuleCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18, vertical: 10),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(999),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     onPressed: onDiscover ?? onTap,

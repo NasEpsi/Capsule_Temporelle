@@ -73,7 +73,7 @@ class MyBottomMenu extends StatelessWidget {
             case 2:
               _goTo(
                 context,
-                ProfilePage(),
+                const ProfilePage(),
               );
               break;
           }

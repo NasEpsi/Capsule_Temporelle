@@ -5,6 +5,7 @@ import '../../models/user.dart';
 import '../../models/capsule.dart';
 
 class DatabaseService {
+  // Android Emulator -> 10.0.2.2 pointe vers ton PC
   static const String _baseUrl = "http://10.0.2.2:3000";
 
   Map<String, String> _headers({String? token}) => {
@@ -18,7 +19,7 @@ class DatabaseService {
     }
   }
 
-  // USERS
+  // ---------------- USERS ----------------
 
   Future<User> getUserById({required int userId, String? token}) async {
     final res = await http.get(
@@ -29,7 +30,7 @@ class DatabaseService {
     return User.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
-  //  CAPSULES
+  // ---------------- CAPSULES ----------------
 
   Future<Capsule> createCapsule({
     String? token,
@@ -37,7 +38,7 @@ class DatabaseService {
     required String title,
     String? description,
     required DateTime unlockAt,
-    required String requiredSky,
+    required String requiredSky, // "SUNNY" / "CLOUDY" / "RAINY" / "SNOWY"
   }) async {
     final res = await http.post(
       Uri.parse("$_baseUrl/capsules"),
@@ -54,6 +55,8 @@ class DatabaseService {
     return Capsule.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
+  /// Capsules liées à un user (owner/beneficiary/contributor)
+  /// Le backend renvoie maintenant "member_role"
   Future<List<Capsule>> getCapsulesForUser({
     String? token,
     required int userId,
@@ -66,5 +69,20 @@ class DatabaseService {
 
     final list = jsonDecode(res.body) as List<dynamic>;
     return list.map((e) => Capsule.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  /// Ajouter un membre à une capsule (BENEFICIARY / CONTRIBUTOR)
+  Future<void> addMemberToCapsule({
+    String? token,
+    required int capsuleId,
+    required int userId,
+    required String role, // "BENEFICIARY" / "CONTRIBUTOR"
+  }) async {
+    final res = await http.post(
+      Uri.parse("$_baseUrl/capsules/$capsuleId/members"),
+      headers: _headers(token: token),
+      body: jsonEncode({"user_id": userId, "role": role}),
+    );
+    _ensureSuccess(res);
   }
 }

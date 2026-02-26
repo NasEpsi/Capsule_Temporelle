@@ -15,13 +15,12 @@ router.get("/:id", async (req, res) => {
   res.json(user);
 });
 
-// GET /users/:id/capsules
+// GET /users/:id/capsules  (avec rôle)
 router.get("/:id/capsules", async (req, res) => {
   const userId = Number(req.params.id);
 
-  // récupère les capsules où user est owner/beneficiary/contributor via capsule_member
   const result = await pool.query(
-    `SELECT c.*
+    `SELECT c.*, m.role AS member_role
      FROM capsule c
      JOIN capsule_member m ON m.capsule_id = c.id
      WHERE m.user_id = $1

@@ -3,33 +3,51 @@ const { pool } = require("../db");
 
 const router = express.Router();
 
-// GET /users/:id
-router.get("/:id", async (req, res) => {
-  const id = Number(req.params.id);
-  const result = await pool.query(
-    `SELECT id, name, email, status FROM app_user WHERE id=$1`,
-    [id]
+// POST /capsules/:id/members
+router.post("/:id/members", async (req, res) => {
+  const capsuleId = Number(req.params.id);
+  const { user_id, role } = req.body || {};
+  if (!user_id || !role) return res.status(400).json({ error: "Missing fields" });
+
+  const allowed = ["BENEFICIARY", "CONTRIBUTOR", "OWNER"];
+  if (!allowed.includes(role)) return res.status(400).json({ error: "Invalid role" });
+
+  await pool.query(
+    `INSERT INTO capsule_member(capsule_id, user_id, role)
+     VALUES ($1, $2, $3)
+     ON CONFLICT (capsule_id, user_id) DO UPDATE SET role = EXCLUDED.role`,
+    [capsuleId, user_id, role]
   );
-  const user = result.rows[0];
-  if (!user) return res.status(404).json({ error: "User not found" });
-  res.json(user);
+
+  res.status(201).json({ ok: true });
 });
 
-// GET /users/:id/capsules
-router.get("/:id/capsules", async (req, res) => {
-  const userId = Number(req.params.id);
+// POST /capsules/:id/messages
+router.post("/:id/messages", async (req, res) => {
+  const capsuleId = Number(req.params.id);
+  const { user_id, content } = req.body || {};
+  if (!user_id || !content) return res.status(400).json({ error: "Missing fields" });
 
-  // récupère les capsules où user est owner/beneficiary/contributor via capsule_member
-  const result = await pool.query(
-    `SELECT c.*
-     FROM capsule c
-     JOIN capsule_member m ON m.capsule_id = c.id
-     WHERE m.user_id = $1
-     ORDER BY c.created_at DESC`,
-    [userId]
+  const roleRes = await pool.query(
+    `SELECT role FROM capsule_member WHERE capsule_id=$1 AND user_id=$2`,
+    [capsuleId, user_id]
   );
 
-  res.json(result.rows);
+  const membership = roleRes.rows[0];
+  if (!membership) return res.status(403).json({ error: "Not a member of this capsule" });
+
+  if (membership.role === "BENEFICIARY") {
+    return res.status(403).json({ error: "Beneficiary cannot post messages" });
+  }
+
+  const result = await pool.query(
+    `INSERT INTO message(capsule_id, user_id, content)
+     VALUES ($1, $2, $3)
+     RETURNING *`,
+    [capsuleId, user_id, content]
+  );
+
+  res.status(201).json(result.rows[0]);
 });
 
 module.exports = router;

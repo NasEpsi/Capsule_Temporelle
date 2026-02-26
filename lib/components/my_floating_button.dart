@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:capsule_emporelle_flutter/components/capsule_temporelle/lib/pages/create_capsule_page.dart';
+import '../pages/create_capsule_page.dart';
 
 class DraggableCreateCapsuleButton extends StatefulWidget {
   const DraggableCreateCapsuleButton({super.key});

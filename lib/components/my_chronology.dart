@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum WeatherCondition { sun, rain, snow, storm, cloudy, fog }
+enum WeatherCondition { sun, rain, snow, cloudy}
 
 class MyChronologyCard extends StatelessWidget {
   final DateTime createdAt;
@@ -59,7 +59,7 @@ class MyChronologyCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 15,
             offset: const Offset(0, 6),
           )
@@ -91,7 +91,7 @@ class MyChronologyCard extends StatelessWidget {
                     "Création",
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.black.withOpacity(0.60),
+                      color: Colors.black.withValues(alpha: 0.60),
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -125,7 +125,7 @@ class MyChronologyCard extends StatelessWidget {
                       "Débloqué",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black.withOpacity(0.60),
+                        color: Colors.black.withValues(alpha: 0.60),
                         fontWeight: FontWeight.w400,
                       ),
                     ),

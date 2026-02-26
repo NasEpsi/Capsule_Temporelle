@@ -17,7 +17,7 @@ class MyContributorsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 15,
             offset: const Offset(0, 6),
           )
@@ -50,7 +50,7 @@ class MyContributorsCard extends StatelessWidget {
               "Aucun contributeur pour le moment",
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black.withOpacity(0.60),
+                color: Colors.black.withValues(alpha: 0.60),
               ),
             )
           else
@@ -62,7 +62,7 @@ class MyContributorsCard extends StatelessWidget {
                   padding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8DCC4).withOpacity(0.55),
+                    color: const Color(0xFFE8DCC4).withValues(alpha: 0.55),
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Text(

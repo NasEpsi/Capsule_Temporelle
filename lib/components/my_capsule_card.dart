@@ -68,7 +68,7 @@ class MyCapsuleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.10),
+                color: Colors.black.withValues(alpha: 0.10),
                 blurRadius: 15,
                 offset: const Offset(0, 5),
               ),
@@ -132,14 +132,14 @@ class MyCapsuleCard extends StatelessWidget {
                     Icon(
                       Icons.calendar_today_outlined,
                       size: 24,
-                      color: Colors.black.withOpacity(1),
+                      color: Colors.black,
                     ),
                     const SizedBox(width: 10),
                     Text(
                       "Ouvre dans ",
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black.withOpacity(1),
+                        color: Colors.black,
                       ),
                     ),
                     const Text(
@@ -157,14 +157,14 @@ class MyCapsuleCard extends StatelessWidget {
                       " jours",
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black.withOpacity(1),
+                        color: Colors.black,
                       ),
                     ),
                   ],
                 ),
 
                 const SizedBox(height: 10),
-                Divider(color: Colors.black.withOpacity(0.10), height: 1),
+                Divider(color: Colors.black.withValues(alpha: 0.10), height: 1),
                 const SizedBox(height: 10),
               ] else ...[
                 // "Débloquer le : 24/01/2023"
@@ -185,7 +185,7 @@ class MyCapsuleCard extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 10),
-                Divider(color: Colors.black.withOpacity(0.10), height: 1),
+                Divider(color: Colors.black.withValues(alpha: 0.10), height: 1),
                 const SizedBox(height: 10),
               ],
 

@@ -15,7 +15,7 @@ class MyMessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderColor =
-    const Color(0xFFFF8D28).withOpacity(0.65);
+    const Color(0xFFFF8D28).withValues(alpha: 0.65);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -17,6 +17,7 @@ class WeatherSquare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const orange = Color(0xFFFF8D28);
+    const black = Color(0xFF000000);
 
     IconData getIcon() {
       switch (type) {
@@ -39,16 +40,16 @@ class WeatherSquare extends StatelessWidget {
         height: 120,
         decoration: BoxDecoration(
           color: isActive
-              ? const Color(0xFFFF8D28).withOpacity(0.15) // actif
+              ? const Color(0xFFFF8D28).withValues(alpha: 0.15) // actif
               : const Color(0xFFFFFFFF), // inactif
           borderRadius: BorderRadius.circular(25),
           border: isActive
               ? Border.all(color: orange, width: 1.5)
-              : Border.all(color: black.withOpacity(0.1), width: 1.5),
+              : Border.all(color: black.withValues(alpha: 0.1), width: 1.5),
           boxShadow: [
             if (isActive)
               BoxShadow(
-                color: orange.withOpacity(0.25),
+                color: orange.withValues(alpha: 0.25),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               )

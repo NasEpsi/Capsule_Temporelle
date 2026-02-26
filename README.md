@@ -1,6 +1,6 @@
-# capsule_emporelle_flutter
+# capsule_temporelle
 
-A new Flutter project.
+Projet Flutter : Capsule Temporelle.
 
 ## Getting Started
 

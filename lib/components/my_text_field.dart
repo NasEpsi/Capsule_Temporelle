@@ -19,7 +19,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderColor =
-    const Color(0xFFFF8D28).withOpacity(0.65);
+    const Color(0xFFFF8D28).withValues(alpha: 0.65);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class MyTextField extends StatelessWidget {
           subtitle,
           style: const TextStyle(
             fontSize: 16,
-            color: Color(0xFF000000).withOpacity(0.6),
+            color: Color(0x99000000),
           ),
         ),
 
@@ -61,7 +61,7 @@ class MyTextField extends StatelessWidget {
 
             hintText: hintText,
             hintStyle: const TextStyle(
-              color: Color(0xFF000000).withOpacity(0.4),
+              color: Color(0x66000000),
             ),
 
             enabledBorder: OutlineInputBorder(
@@ -75,7 +75,7 @@ class MyTextField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
               borderSide: const BorderSide(
-                color: const Color(0xFFFF8D28).withOpacity(0.65),
+                color: Color(0xA6FF8D28),
                 width: 1.5,
               ),
             ),

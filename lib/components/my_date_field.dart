@@ -36,7 +36,7 @@ class _MyDateFieldState extends State<MyDateField> {
   @override
   Widget build(BuildContext context) {
     final borderColor =
-    const Color(0xFFFF8D28).withOpacity(0.65);
+    const Color(0xFFFF8D28).withValues(alpha: 0.65);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +57,7 @@ class _MyDateFieldState extends State<MyDateField> {
           widget.subtitle,
           style: const TextStyle(
             fontSize: 16,
-            color: Color(0xFF000000).withOpacity(0.6),
+            color: Color(0x99000000),
           ),
         ),
 
@@ -93,7 +93,7 @@ class _MyDateFieldState extends State<MyDateField> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
                   borderSide: const BorderSide(
-                    color: const Color(0xFFFF8D28).withOpacity(0.65),
+                    color: const Color(0xA6FF8D28),
                     width: 1.5,
                   ),
                 ),

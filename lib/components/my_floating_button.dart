@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:capsule_temporelle/pages/create_capsule_page.dart';
+import '../pages/create_capsule_page.dart';
 
 class DraggableCreateCapsuleButton extends StatefulWidget {
   const DraggableCreateCapsuleButton({super.key});
@@ -36,7 +36,7 @@ class _DraggableCreateCapsuleButtonState
               });
             },
             child: FloatingActionButton(
-              backgroundColor: const Color(0xFFFF8D28).withOpacity(0.65),
+              backgroundColor: const Color(0xFFFF8D28).withValues(alpha: 0.65),
               elevation: 6,
               onPressed: () {
                 Navigator.push(

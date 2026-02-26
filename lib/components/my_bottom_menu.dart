@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 // importation des pages
-import 'package:capsule_temporelle/pages/home_page.dart';
-import 'package:capsule_temporelle/pages/capsule_list_page.dart';
-import 'package:capsule_temporelle/pages/profile_page.dart';
+import '../pages/home_page.dart';
+import '../pages/profile_page.dart';
 import '../services/auth/auth_service.dart';
 
 /*
@@ -44,7 +43,7 @@ class MyBottomMenu extends StatelessWidget {
         color: Colors.grey[200],
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.10),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -68,13 +67,13 @@ class MyBottomMenu extends StatelessWidget {
               break;
 
             case 1:
-              _goTo(context, const ConversationListPage());
+              _goTo(context, const HomePage());
               break;
 
             case 2:
               _goTo(
                 context,
-                ProfilePage(uid: _auth.getCurrentUid()),
+                ProfilePage(),
               );
               break;
           }

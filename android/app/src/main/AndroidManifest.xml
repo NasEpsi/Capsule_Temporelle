@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="capsule_temporelle"
+        android:label="capsule_emporelle_flutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

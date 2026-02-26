@@ -1,62 +1,87 @@
-  import 'package:flutter/material.dart';
-  /*
-  *
-  * Text Fied of a form where user can write
-  *
-  * -----------------------------------------------------
-  *
-  * It needs
-  * - textController who allow to access to what the user wrote
-  * - a placeholder
-  * - obscure text (booleen that will hide the text when its true)
-  *  */
+import 'package:flutter/material.dart';
 
-  class MyTextField extends StatelessWidget {
-    // controller
-    final TextEditingController controller;
-    final String hintText;
-    final bool obscureText;
+class MyTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String title;
+  final String subtitle;
+  final String hintText;
+  final bool obscureText;
 
-    //constructor
-    const MyTextField({
-      super.key,
-      required this.controller,
-      required this.hintText,
-      required this.obscureText,
-    });
+  const MyTextField({
+    super.key,
+    required this.controller,
+    required this.title,
+    required this.subtitle,
+    required this.hintText,
+    required this.obscureText,
+  });
 
-    //UI
-    @override
-    Widget build(BuildContext context) {
-      return TextField(
-        controller: controller,
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          // border when its not selected
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color:Theme.of(context).colorScheme.tertiary,
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
+  @override
+  Widget build(BuildContext context) {
+    final borderColor =
+    const Color(0xFFFF8D28).withOpacity(0.65);
 
-
-          // border when its selected
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-
-          fillColor: Theme.of(context).colorScheme.inversePrimary,
-          filled: true,
-
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Titre
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
           ),
         ),
-      );
-    }
+
+        const SizedBox(height: 4),
+
+        // Sous-titre
+        Text(
+          subtitle,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Color(0xFF000000).withOpacity(0.6),
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+        // Champ texte
+        TextField(
+          controller: controller,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 18,
+            ),
+
+            filled: true,
+            fillColor: const Color(0xFFFFFFFF),
+
+            hintText: hintText,
+            hintStyle: const TextStyle(
+              color: Color(0xFF000000).withOpacity(0.4),
+            ),
+
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(
+                color: borderColor,
+                width: 1.2,
+              ),
+            ),
+
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: const BorderSide(
+                color: const Color(0xFFFF8D28).withOpacity(0.65),
+                width: 1.5,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
+}

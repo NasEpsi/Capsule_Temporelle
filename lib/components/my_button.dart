@@ -1,48 +1,37 @@
 import 'package:flutter/material.dart';
 
-/*
-* Button
-*
-*
-* needs:
-* a text
-* a function onclick
-*
-* */
-
 class MyButton extends StatelessWidget {
-  // variable
   final String text;
-  final void Function()? onTap;
+  final VoidCallback? onTap;
 
-  //constructor
   const MyButton({
     super.key,
     required this.text,
     required this.onTap,
   });
 
-  // UI
   @override
   Widget build(BuildContext context) {
+    const buttonColor = const Color(0xFFFF8D28).withOpacity(0.65);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(25),
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.circular(12)
+          color: buttonColor,
+          borderRadius: BorderRadius.circular(25),
         ),
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.inversePrimary,
-
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              letterSpacing: 0.3,
             ),
-
           ),
         ),
       ),

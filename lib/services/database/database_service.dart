@@ -18,7 +18,7 @@ class DatabaseService {
     }
   }
 
-  // ---------- USERS (Sprint 1) ----------
+  // USERS
 
   Future<User> getUserById({required int userId, String? token}) async {
     final res = await http.get(
@@ -29,7 +29,7 @@ class DatabaseService {
     return User.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
-  // ---------- CAPSULES ----------
+  //  CAPSULES
 
   Future<Capsule> createCapsule({
     String? token,

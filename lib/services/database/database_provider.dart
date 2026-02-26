@@ -3,15 +3,14 @@ import 'package:flutter/foundation.dart';
 import '../database/database_service.dart';
 import '../../models/user.dart';
 import '../../models/capsule.dart';
-
-// Prévu pour sprint auth (tu as créé un dossier auth)
-// import '../auth/auth_service.dart';
+import '../../models/weather_snapshot.dart';
+import '../meteo/meteo_service.dart';
+import '../../helper/constants.dart';
 
 class DatabaseProvider extends ChangeNotifier {
-  // final _auth = AuthService(); // Sprint suivant
   final DatabaseService _db = DatabaseService();
 
-  // Token prévu sprint auth
+  // Token auth
   String _token = "";
   String get token => _token;
   void setToken(String value) {
@@ -28,7 +27,11 @@ class DatabaseProvider extends ChangeNotifier {
 
   // CAPSULES
   List<Capsule> capsules = [];
-  // -------- Helpers --------
+
+  final MeteoService _meteo = MeteoService();
+  WeatherSnapshot? currentWeather;
+
+  //  Helpers
   Future<T?> _run<T>(Future<T> Function() action) async {
     loading = true;
     error = null;
@@ -45,7 +48,7 @@ class DatabaseProvider extends ChangeNotifier {
     }
   }
 
-  // -------- USERS --------
+  //  USERS
 
   Future<void> fetchUserById(int userId) async {
     await _run(() async {
@@ -53,7 +56,7 @@ class DatabaseProvider extends ChangeNotifier {
     });
   }
 
-  // -------- CAPSULES --------
+  //  CAPSULES
 
   Future<void> fetchCapsulesForUser(int userId) async {
     await _run(() async {
@@ -81,6 +84,24 @@ class DatabaseProvider extends ChangeNotifier {
 
     if (created != null) {
       capsules = [created, ...capsules];
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchWeatherAuxerre() async {
+    loading = true;
+    error = null;
+    notifyListeners();
+
+    try {
+      currentWeather = await _meteo.getCurrentWeather(
+        latitude: GeoDefaults.auxerreLat,
+        longitude: GeoDefaults.auxerreLon,
+      );
+    } catch (e) {
+      error = e.toString();
+    } finally {
+      loading = false;
       notifyListeners();
     }
   }

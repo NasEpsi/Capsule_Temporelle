@@ -40,7 +40,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
 
   @override
   Widget build(BuildContext context) {
-    const bg = Color(0xFFF7F2EC);
+    const bg = Color(0xFFF8F5F0);
 
     return Scaffold(
       backgroundColor: bg,

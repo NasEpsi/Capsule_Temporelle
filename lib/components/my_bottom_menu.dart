@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 // importation des pages
-import 'package:capsule_emporelle_flutter/components/capsule_temporelle/lib/pages/home_page.dart';
-import 'package:capsule_emporelle_flutter/components/capsule_temporelle/lib/pages/capsule_list_page.dart';
-import 'package:capsule_emporelle_flutter/components/capsule_temporelle/lib/pages/profile_page.dart';
+import '../pages/home_page.dart';
+import '../pages/profile_page.dart';
 import '../services/auth/auth_service.dart';
 
 /*
@@ -68,13 +67,13 @@ class MyBottomMenu extends StatelessWidget {
               break;
 
             case 1:
-              _goTo(context, const ConversationListPage());
+              _goTo(context, const HomePage());
               break;
 
             case 2:
               _goTo(
                 context,
-                ProfilePage(uid: _auth.getCurrentUid()),
+                ProfilePage(),
               );
               break;
           }

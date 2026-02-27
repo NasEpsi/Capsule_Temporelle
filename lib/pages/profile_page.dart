@@ -97,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                   MyNavCardButton(
                     icon: Icons.settings_outlined,
                     title: "Paramètres",
-                    page: const ParameterPage(),
+                    page: const ParametersPage(),
                   ),
 
                   const SizedBox(height: 25),

@@ -19,7 +19,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderColor =
-    const Color(0xFFFF8D28).withValues(alpha: 0.65);
+    const Color(0xA6FF8D28);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class MyTextField extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 4),
+        const SizedBox(height: 5),
 
         // Sous-titre
         Text(
@@ -44,7 +44,7 @@ class MyTextField extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
 
         // Champ texte
         TextField(

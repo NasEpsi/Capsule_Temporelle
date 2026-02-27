@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'services/auth/auth_gate.dart';
 import 'services/auth/auth_provider.dart';
 import 'services/database/database_provider.dart';
+import 'pages/create_capsule_page.dart';
 
 void main() {
   runApp(
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthGate(),
+      home: CreateCapsulePage(),
     );
   }
 }

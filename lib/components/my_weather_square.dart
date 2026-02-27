@@ -40,8 +40,8 @@ class WeatherSquare extends StatelessWidget {
         height: 120,
         decoration: BoxDecoration(
           color: isActive
-              ? const Color(0xFFFF8D28).withValues(alpha: 0.15) // actif
-              : const Color(0xFFFFFFFF), // inactif
+              ? const Color(0x26FF8D28) // actif
+              : const Color(0x1AFFFFFF), // inactif
           borderRadius: BorderRadius.circular(25),
           border: isActive
               ? Border.all(color: orange, width: 1.5)

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyContributorsCard extends StatelessWidget {
+  final String title;
   final List<String> contributors;
 
   const MyContributorsCard({
     super.key,
+    required this.title,
     required this.contributors,
   });
 
@@ -26,15 +28,18 @@ class MyContributorsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Titre + icône
+
           Row(
             children: [
-              Icon(Icons.group_outlined,
-                  size: 24, color: Colors.black),
-              const SizedBox(width: 8),
-              const Text(
-                "Contributeurs",
-                style: TextStyle(
+              const Icon(
+                Icons.group_outlined,
+                size: 24,
+                color: Colors.black,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                title,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
@@ -42,12 +47,12 @@ class MyContributorsCard extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
 
           // Chips dynamiques
           if (contributors.isEmpty)
             Text(
-              "Aucun contributeur pour le moment",
+              "Aucun membre pour le moment",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black.withValues(alpha: 0.60),
@@ -59,10 +64,11 @@ class MyContributorsCard extends StatelessWidget {
               runSpacing: 10,
               children: contributors.map((name) {
                 return Container(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8DCC4).withValues(alpha: 0.55),
+                    color: const Color(0xFFE8DCC4)
+                        .withValues(alpha: 0.55),
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Text(

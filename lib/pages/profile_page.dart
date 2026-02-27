@@ -1,3 +1,5 @@
+import 'package:capsule_emporelle_flutter/pages/add_member_page.dart';
+import 'package:capsule_emporelle_flutter/pages/parameter_page.dart';
 import 'package:flutter/material.dart';
 
 import '../components/my_bottom_menu.dart';
@@ -87,7 +89,7 @@ class ProfilePage extends StatelessWidget {
                   MyNavCardButton(
                     icon: Icons.group_outlined,
                     title: "Membres de la famille",
-                    page: const Placeholder(),
+                    page: const AddMemberPage(),
                   ),
 
                   const SizedBox(height: 15),
@@ -95,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                   MyNavCardButton(
                     icon: Icons.settings_outlined,
                     title: "Paramètres",
-                    page: const Placeholder(),
+                    page: const ParameterPage(),
                   ),
 
                   const SizedBox(height: 25),

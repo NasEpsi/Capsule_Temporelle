@@ -1,3 +1,4 @@
+import 'package:capsule_emporelle_flutter/pages/create_capsule_page.dart';
 import 'package:flutter/material.dart';
 
 // importation des pages
@@ -54,8 +55,8 @@ class MyBottomMenu extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.black54,
+        selectedItemColor: const Color(0xFFFF8A00),
+        unselectedItemColor: Colors.black,
 
         onTap: (index) {
           // si on clique sur l'onglet déjà actif → ne rien faire
@@ -67,7 +68,7 @@ class MyBottomMenu extends StatelessWidget {
               break;
 
             case 1:
-              _goTo(context, const HomePage());
+              _goTo(context, const CreateCapsulePage());
               break;
 
             case 2:

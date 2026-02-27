@@ -62,7 +62,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   ),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 5),
                   const Text(
                     "Création de la capsule",
                     style: TextStyle(
@@ -73,7 +73,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                 ],
               ),
               Divider(color: Colors.black.withValues(alpha: 0.10)),
-              const SizedBox(height: 14),
+              const SizedBox(height: 15),
 
               // Nom de la capsule
               MyTextField(
@@ -84,7 +84,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                 obscureText: false,
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
 
               // Nom du bénéficiaire
               MyTextField(
@@ -95,7 +95,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                 obscureText: false,
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
 
               // Date ouverture
               MyDateField(
@@ -104,7 +104,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                 subtitle: "Choissiser une date spécial",
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
 
               // Météo
               const Text(
@@ -114,7 +114,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 5),
               const Text(
                 "Choissiser la météo parfaite",
                 style: TextStyle(
@@ -122,7 +122,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                   color: Color(0xFF7A7A7A),
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 15),
 
               // 2x2 carrés météo
               Wrap(
@@ -152,7 +152,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                 ],
               ),
 
-              const SizedBox(height: 28),
+              const SizedBox(height: 30),
 
               // Bouton créer capsule
               MyButton(
@@ -160,7 +160,7 @@ class _CreateCapsulePageState extends State<CreateCapsulePage> {
                 onTap: _submit,
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
             ],
           ),
         ),

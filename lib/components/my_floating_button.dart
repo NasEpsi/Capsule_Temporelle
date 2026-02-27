@@ -36,7 +36,7 @@ class _DraggableCreateCapsuleButtonState
               });
             },
             child: FloatingActionButton(
-              backgroundColor: const Color(0xFFFF8D28).withValues(alpha: 0.65),
+              backgroundColor: const Color(0xA6FF8D28),
               elevation: 6,
               onPressed: () {
                 Navigator.push(

@@ -96,7 +96,7 @@ class MyCapsuleCard extends StatelessWidget {
                         ? Icons.lock_open
                         : Icons.lock_outline,
                     color: status == CapsuleStatus.unlocked
-                        ? Colors.green
+                        ? orange
                         : orange,
                     size: 35,
                   ),

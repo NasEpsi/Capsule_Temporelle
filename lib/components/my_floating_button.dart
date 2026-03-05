@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:capsule_temporelle/pages/create_capsule_page.dart';
 
 class DraggableCreateCapsuleButton extends StatefulWidget {
-  const DraggableCreateCapsuleButton({super.key});
+  final VoidCallback onPressed;
+
+  const DraggableCreateCapsuleButton({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   State<DraggableCreateCapsuleButton> createState() =>
@@ -11,7 +15,6 @@ class DraggableCreateCapsuleButton extends StatefulWidget {
 
 class _DraggableCreateCapsuleButtonState
     extends State<DraggableCreateCapsuleButton> {
-
   double top = 600;
   double left = 300;
 
@@ -19,38 +22,27 @@ class _DraggableCreateCapsuleButtonState
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    return Stack(
-      children: [
-        Positioned(
-          top: top,
-          left: left,
-          child: GestureDetector(
-            onPanUpdate: (details) {
-              setState(() {
-                left += details.delta.dx;
-                top += details.delta.dy;
+    return Positioned(
+      top: top,
+      left: left,
+      child: GestureDetector(
+        onPanUpdate: (details) {
+          setState(() {
+            left += details.delta.dx;
+            top += details.delta.dy;
 
-                // Empêche de sortir de l’écran
-                left = left.clamp(0, screenSize.width - 70);
-                top = top.clamp(0, screenSize.height - 100);
-              });
-            },
-            child: FloatingActionButton(
-              backgroundColor: const Color(0xFFFF8D28).withOpacity(0.65),
-              elevation: 6,
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const CreateCapsulePage(),
-                //   ),
-                // );
-              },
-              child: const Icon(Icons.add, color: Colors.white),
-            ),
-          ),
+            // Empêche de sortir de l’écran
+            left = left.clamp(0, screenSize.width - 70);
+            top = top.clamp(0, screenSize.height - 100);
+          });
+        },
+        child: FloatingActionButton(
+          backgroundColor: const Color(0xFFFF8D28).withOpacity(0.65),
+          elevation: 6,
+          onPressed: widget.onPressed,
+          child: const Icon(Icons.add, color: Colors.white),
         ),
-      ],
+      ),
     );
   }
 }

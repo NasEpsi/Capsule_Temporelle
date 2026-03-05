@@ -6,7 +6,7 @@ const { pool } = require("./db");
 const authRoutes = require("./routes/auth.routes");
 const usersRoutes = require("./routes/users.routes");
 const capsulesRoutes = require("./routes/capsules.routes");
-
+const invitesRoutes = require("./routes/invites.routes");
 const app = express();
 
 app.use(cors());
@@ -21,6 +21,8 @@ app.get("/health", async (_, res) => {
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/capsules", capsulesRoutes);
+app.use("/invites", invitesRoutes);
+
 
 const port = Number(process.env.PORT || 3000);
 app.listen(port, () => console.log(`API running on http://localhost:${port}`));

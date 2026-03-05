@@ -1,6 +1,9 @@
+import 'package:capsule_emporelle_flutter/services/auth/login_or_register.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/login_page.dart';
+import 'pages/capsule_list_page.dart';
 import 'services/auth/auth_gate.dart';
 import 'services/auth/auth_provider.dart';
 import 'services/database/database_provider.dart';
@@ -35,6 +38,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppColors,
       home: const AuthGate(),
+      routes: {
+        "/login": (_) => const LoginOrRegister(),
+        "/home": (_) => const CapsuleListPage(),
+      },
     );
   }
 }

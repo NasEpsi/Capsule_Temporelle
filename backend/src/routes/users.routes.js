@@ -21,8 +21,8 @@ router.get("/:id/capsules", async (req, res) => {
 
   const result = await pool.query(
     `SELECT c.*, m.role AS member_role
-     FROM capsule c
-     JOIN capsule_member m ON m.capsule_id = c.id
+     FROM capsules c
+     JOIN capsule_members m ON m.capsule_id = c.id
      WHERE m.user_id = $1
      ORDER BY c.created_at DESC`,
     [userId]

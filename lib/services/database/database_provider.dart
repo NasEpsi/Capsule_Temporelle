@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import '../database/database_service.dart';
@@ -51,6 +52,8 @@ class DatabaseProvider extends ChangeNotifier {
     }
   }
 
+
+
   // -------- USERS --------
   Future<void> fetchUserById(int userId) async {
     await _run(() async {
@@ -72,7 +75,6 @@ class DatabaseProvider extends ChangeNotifier {
     });
   }
 
-  /// Pratique : charge les capsules du user connecté
   Future<void> fetchMyCapsules() async {
     final u = currentUser;
     if (u == null) {
@@ -80,49 +82,68 @@ class DatabaseProvider extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    await fetchCapsulesForUser(u.id);
+    if (_token.isEmpty) {
+      error = "User not authenticated";
+      notifyListeners();
+      return;
+    }
+
+    await _run(() async {
+      await _db.syncInvites(token: _token);
+
+      // récupère toutes les capsules du user (owner/beneficiary/contributor)
+      capsules = await _db.getCapsulesForUser(
+        userId: u.id,
+        token: _token,
+      );
+    });
   }
 
-  Future<void> createNewCapsule({
-    required int creatorUserId,
+  Future<Capsule?> createCapsule({
     required String title,
     String? description,
     required DateTime unlockAt,
     required String requiredSky,
-  }) async {
-    final created = await _run(() async {
-      return await _db.createCapsule(
-        creatorUserId: creatorUserId,
-        title: title,
-        description: description,
-        unlockAt: unlockAt,
-        requiredSky: requiredSky,
-        token: _token.isEmpty ? null : _token,
-      );
-    });
+    String? beneficiaryEmail,
+    }) async {
+      if (_token.isEmpty) throw Exception("User not authenticated");
+
+      final created = await _run(() async {
+        return await _db.createCapsule(
+          token: _token,
+          title: title,
+          description: description,
+          unlockAt: unlockAt,
+          requiredSky: requiredSky,
+          beneficiaryEmail: beneficiaryEmail,
+        );
+      });
 
     if (created != null) {
       capsules = [created, ...capsules];
       notifyListeners();
     }
+    return created;
   }
 
   Future<void> addMember({
     required int capsuleId,
-    required int userId,
-    required String role, // BENEFICIARY / CONTRIBUTOR
-  }) async {
-    await _run(() async {
-      await _db.addMemberToCapsule(
-        capsuleId: capsuleId,
-        userId: userId,
-        role: role,
-        token: _token.isEmpty ? null : _token,
-      );
-    });
-  }
+    String? beneficiaryEmail,
+    required List<String> contributorEmails,
+    }) async {
+      if (_token.isEmpty) throw Exception("User not authenticated");
 
-  // -------- METEO --------
+      await _run(() async {
+        await _db.addMember(
+          token: _token,
+          capsuleId: capsuleId,
+          beneficiaryEmail: beneficiaryEmail,
+          contributorEmails: contributorEmails,
+        );
+      });
+      await fetchMyCapsules();
+  }
+  // METEO
 
   Future<void> fetchWeatherAuxerre() async {
     loading = true;
@@ -140,5 +161,19 @@ class DatabaseProvider extends ChangeNotifier {
       loading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> logout(BuildContext context) async {
+    _token = "";
+    currentUser = null;
+    capsules = [];
+    error = null;
+
+    notifyListeners();
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      "/login",
+          (route) => false,
+    );
   }
 }

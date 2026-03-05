@@ -13,22 +13,23 @@ class AuthGate extends StatefulWidget {
 }
 
 class _AuthGateState extends State<AuthGate> {
-  bool _initDone = false;
+  late Future<void> _initFuture;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_initDone) {
-      _initDone = true;
-      context.read<AuthProvider>().init();
-    }
+  void initState() {
+    super.initState();
+    _initFuture = Future.microtask(() => context.read<AuthProvider>().init());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
-      builder: (_, auth, __) {
-        if (auth.status == AuthStatus.loading) {
+    return FutureBuilder<void>(
+      future: _initFuture,
+      builder: (_, snap) {
+        final auth = context.watch<AuthProvider>();
+
+        if (snap.connectionState == ConnectionState.waiting ||
+            auth.status == AuthStatus.loading) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );

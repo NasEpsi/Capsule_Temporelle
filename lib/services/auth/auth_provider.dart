@@ -1,17 +1,19 @@
 import 'package:flutter/foundation.dart';
 import '../../models/user.dart';
 import 'auth_service.dart';
+import '../database/database_service.dart'; // <-- adapte le chemin
+import 'dart:async'; // en haut du fichier pour unawaited
 
 enum AuthStatus { loading, authenticated, unauthenticated }
 
 class AuthProvider extends ChangeNotifier {
   final AuthService _auth = AuthService();
+  final DatabaseService _db = DatabaseService();
 
   AuthStatus status = AuthStatus.loading;
   String token = "";
   User? user;
 
-  /// à appeler au démarrage (équivalent "authStateChanges" init)
   Future<void> init() async {
     status = AuthStatus.loading;
     notifyListeners();
@@ -28,11 +30,20 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       final me = await _auth.me(token: stored);
+
       token = stored;
       user = me;
       status = AuthStatus.authenticated;
-    } catch (_) {
-      // token invalide/expiré
+      notifyListeners();
+
+      // ✅ IMPORTANT: ne jamais casser l'auth si le sync échoue
+      try {
+        await _db.syncInvites(token: token);
+      } catch (e) {
+        debugPrint("syncInvites failed (ignored): $e");
+      }
+    } catch (e) {
+      // Ici seulement: token invalide / /auth/me KO
       await _auth.clearToken();
       token = "";
       user = null;
@@ -42,33 +53,58 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logout() async {
-    await _auth.logout();
-    token = "";
-    user = null;
-    status = AuthStatus.unauthenticated;
-    notifyListeners();
-  }
 
   Future<void> login(String email, String password) async {
     status = AuthStatus.loading;
     notifyListeners();
 
-    final session = await _auth.login(email: email, password: password);
-    token = session.token;
-    user = session.user;
-    status = AuthStatus.authenticated;
-    notifyListeners();
+    try {
+      final session = await _auth.login(email: email, password: password);
+
+      token = session.token;
+      user = session.user;
+      status = AuthStatus.authenticated;
+      notifyListeners();
+      try {
+        await _db.syncInvites(token: token);
+      } catch (_) {}
+    } catch (e) {
+      token = "";
+      user = null;
+      status = AuthStatus.unauthenticated;
+      notifyListeners();
+      rethrow;
+    }
   }
 
   Future<void> register(String name, String email, String password) async {
     status = AuthStatus.loading;
     notifyListeners();
+    try {
+      final session = await _auth.register(name: name, email: email, password: password);
 
-    final session = await _auth.register(name: name, email: email, password: password);
-    token = session.token;
-    user = session.user;
-    status = AuthStatus.authenticated;
+      token = session.token;
+      user = session.user;
+      status = AuthStatus.authenticated;
+      notifyListeners();
+
+      try {
+        await _db.syncInvites(token: token);
+      } catch (_) {}
+    } catch (e) {
+      token = "";
+      user = null;
+      status = AuthStatus.unauthenticated;
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<void> logout() async {
+    await _auth.clearToken(); // important sinon init() te reconnecte
+    token = "";
+    user = null;
+    status = AuthStatus.unauthenticated;
     notifyListeners();
   }
 }

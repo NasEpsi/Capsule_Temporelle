@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
       `INSERT INTO app_user(name, email, password)
        VALUES ($1, $2, $3)
        RETURNING id, name, email, status`,
-      [name, email, password]
+      [name, email, passwordHash] // ✅
     );
 
     const user = result.rows[0];

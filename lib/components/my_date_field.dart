@@ -50,7 +50,7 @@ class _MyDateFieldState extends State<MyDateField> {
           ),
         ),
 
-        const SizedBox(height: 4),
+        const SizedBox(height: 5),
 
         // Sous-titre
         Text(
@@ -61,7 +61,7 @@ class _MyDateFieldState extends State<MyDateField> {
           ),
         ),
 
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
 
         // Champ date
         GestureDetector(

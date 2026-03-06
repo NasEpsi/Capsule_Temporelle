@@ -76,14 +76,14 @@ class MyChronologyCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 15),
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(Icons.calendar_today_outlined,
                   size: 20, color: Colors.black),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -95,7 +95,7 @@ class MyChronologyCard extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 5),
                   Text(
                     formatDateFr(createdAt),
                     style: const TextStyle(
@@ -108,14 +108,14 @@ class MyChronologyCard extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 18),
+          const SizedBox(height: 20),
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(Icons.calendar_today_outlined,
                   size: 20, color: Colors.black),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
 
               Expanded(
                 child: Column(
@@ -129,7 +129,7 @@ class MyChronologyCard extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 5),
                     Text(
                       formatDateFr(unlockAt),
                       style: const TextStyle(
@@ -137,7 +137,7 @@ class MyChronologyCard extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 5),
 
                     // temps restant (si pas débloqué)
                     if (!isUnlocked)

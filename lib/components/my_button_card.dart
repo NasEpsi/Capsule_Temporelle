@@ -49,7 +49,7 @@ class MyNavCardButton extends StatelessWidget {
                 child: Icon(icon, size: 24, color: Colors.black),
               ),
 
-              const SizedBox(width: 14),
+              const SizedBox(width: 15),
 
               Expanded(
                 child: Text(

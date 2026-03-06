@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../components/my_weather_square.dart';
 import '../components/my_bottom_menu.dart';
 import '../components/my_button.dart';

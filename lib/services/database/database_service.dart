@@ -57,7 +57,7 @@ class DatabaseService {
     return Capsule.fromJson(decoded);
   }
 
-  /// Capsules liées à un user (owner/beneficiary/contributor)
+  /// get capsue for a user (owner/beneficiary/contributor)
   Future<List<Capsule>> getCapsulesForUser({
     String? token,
     required int userId,
@@ -72,7 +72,7 @@ class DatabaseService {
     return list.map((e) => Capsule.fromJson(e as Map<String, dynamic>)).toList();
   }
 
-  /// Ajouter un membre à une capsule (BENEFICIARY / CONTRIBUTOR)
+  /// add a member to a capsule (BENEFICIARY / CONTRIBUTOR)
   Future<void> addMember({
     required String token,
     required int capsuleId,

@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
 import '../database/database_service.dart';
 import '../../models/user.dart';
 import '../../models/capsule.dart';
-
 import '../../models/weather_snapshot.dart';
 import '../meteo/meteo_service.dart';
 import '../../helper/constants.dart';
@@ -12,7 +10,6 @@ import '../../helper/constants.dart';
 class DatabaseProvider extends ChangeNotifier {
   final DatabaseService _db = DatabaseService();
 
-  // Token (sync via ProxyProvider dans main.dart)
   String _token = "";
   String get token => _token;
 
@@ -25,7 +22,7 @@ class DatabaseProvider extends ChangeNotifier {
   bool loading = false;
   String? error;
 
-  // USER (sync via main.dart: db.currentUser = auth.user)
+  // USER 
   User? currentUser;
 
   // CAPSULES
@@ -35,7 +32,6 @@ class DatabaseProvider extends ChangeNotifier {
   final MeteoService _meteo = MeteoService();
   WeatherSnapshot? currentWeather;
 
-  // -------- Helpers --------
   Future<T?> _run<T>(Future<T> Function() action) async {
     loading = true;
     error = null;
@@ -54,7 +50,7 @@ class DatabaseProvider extends ChangeNotifier {
 
 
 
-  // -------- USERS --------
+  //USERS
   Future<void> fetchUserById(int userId) async {
     await _run(() async {
       currentUser = await _db.getUserById(
@@ -64,7 +60,7 @@ class DatabaseProvider extends ChangeNotifier {
     });
   }
 
-  // -------- CAPSULES --------
+  //CAPSULES
 
   Future<void> fetchCapsulesForUser(int userId) async {
     await _run(() async {
@@ -76,28 +72,28 @@ class DatabaseProvider extends ChangeNotifier {
   }
 
   Future<void> fetchMyCapsules() async {
-    final u = currentUser;
-    if (u == null) {
-      error = "Utilisateur non chargé";
-      notifyListeners();
-      return;
-    }
-    if (_token.isEmpty) {
-      error = "User not authenticated";
-      notifyListeners();
-      return;
-    }
-
-    await _run(() async {
-      await _db.syncInvites(token: _token);
-
-      // récupère toutes les capsules du user (owner/beneficiary/contributor)
-      capsules = await _db.getCapsulesForUser(
-        userId: u.id,
-        token: _token,
-      );
-    });
+  if (loading) return;
+  final u = currentUser;
+  if (u == null) {
+    error = "Utilisateur non chargé";
+    notifyListeners();
+    return;
   }
+
+  if (_token.isEmpty) {
+    error = "User not authenticated";
+    notifyListeners();
+    return;
+  }
+
+  await _run(() async {
+    await _db.syncInvites(token: _token);
+    capsules = await _db.getCapsulesForUser(
+      userId: u.id,
+      token: _token,
+    );
+  });
+}
 
   Future<Capsule?> createCapsule({
     required String title,
@@ -143,8 +139,8 @@ class DatabaseProvider extends ChangeNotifier {
       });
       await fetchMyCapsules();
   }
-  // METEO
 
+  // METEO
   Future<void> fetchWeatherAuxerre() async {
     loading = true;
     error = null;

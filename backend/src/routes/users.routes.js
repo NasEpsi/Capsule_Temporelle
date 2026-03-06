@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
   res.json(user);
 });
 
-// GET /users/:id/capsules  (avec rôle)
+// GET /users/:id/capsules 
 router.get("/:id/capsules", async (req, res) => {
   const userId = Number(req.params.id);
 

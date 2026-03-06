@@ -19,14 +19,16 @@ class _CapsulesListPageState extends State<CapsuleListPage> {
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted || _bootDone) return;
       _bootDone = true;
 
       final db = context.read<DatabaseProvider>();
-      db.fetchMyCapsules();
-      db.fetchWeatherAuxerre();
+
+      await Future.wait([
+        db.fetchMyCapsules(),
+        db.fetchWeatherAuxerre(),
+      ]);
     });
   }
 
@@ -219,7 +221,7 @@ class _Header extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.logout),
           onPressed: () {
-            context.read<DatabaseProvider>().logout(context);
+            context.read<AuthProvider>().logout();
           },
         ),
         const SizedBox(height: 2),

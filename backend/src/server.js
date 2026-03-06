@@ -12,7 +12,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// sanity check DB
 app.get("/health", async (_, res) => {
   const r = await pool.query("SELECT NOW() as now");
   res.json({ ok: true, dbTime: r.rows[0].now });

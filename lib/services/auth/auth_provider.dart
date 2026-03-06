@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import '../../models/user.dart';
 import 'auth_service.dart';
-import '../database/database_service.dart'; // <-- adapte le chemin
-import 'dart:async'; // en haut du fichier pour unawaited
+import '../database/database_service.dart';
+import 'dart:async';
 
 enum AuthStatus { loading, authenticated, unauthenticated }
 
@@ -36,14 +36,12 @@ class AuthProvider extends ChangeNotifier {
       status = AuthStatus.authenticated;
       notifyListeners();
 
-      // ✅ IMPORTANT: ne jamais casser l'auth si le sync échoue
       try {
         await _db.syncInvites(token: token);
       } catch (e) {
         debugPrint("syncInvites failed (ignored): $e");
       }
     } catch (e) {
-      // Ici seulement: token invalide / /auth/me KO
       await _auth.clearToken();
       token = "";
       user = null;
@@ -101,7 +99,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    await _auth.clearToken(); // important sinon init() te reconnecte
+    await _auth.clearToken(); 
     token = "";
     user = null;
     status = AuthStatus.unauthenticated;

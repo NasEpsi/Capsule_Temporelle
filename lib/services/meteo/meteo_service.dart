@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../../models/weather_snapshot.dart';
 import 'mapper_meteo.dart';
 

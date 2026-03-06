@@ -1,4 +1,3 @@
-// capsules.routes.js
 const express = require("express");
 const crypto = require("crypto");
 const { pool } = require("../db");
@@ -25,10 +24,8 @@ async function requireOwner(capsuleId, userId) {
   return (await getMyRole(capsuleId, userId)) === "OWNER";
 }
 
-// -----------------------------
 // POST /capsules (create)
-// body: { title, description?, unlockAt, requiredSky }
-// -----------------------------
+
 router.post("/", authRequired, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -85,10 +82,8 @@ router.post("/", authRequired, async (req, res) => {
   }
 });
 
-// -----------------------------
-// POST /capsules/:id/invites (OWNER only)
-// body: { beneficiaryEmail?: string, contributorEmails?: string[] }
-// -----------------------------
+// POST /capsules/:id/invites
+
 router.post("/:id/invites", authRequired, async (req, res) => {
   try {
     const capsuleId = Number(req.params.id);
@@ -150,10 +145,7 @@ router.post("/:id/invites", authRequired, async (req, res) => {
   }
 });
 
-// -----------------------------
-// POST /capsules/:id/members (OWNER only) - utile pour tests
-// body: { userId, role }
-// -----------------------------
+// POST /capsules/:id/members
 router.post("/:id/members", authRequired, async (req, res) => {
   try {
     const capsuleId = Number(req.params.id);
@@ -185,10 +177,8 @@ router.post("/:id/members", authRequired, async (req, res) => {
   }
 });
 
-// -----------------------------
 // POST /capsules/:id/messages (OWNER/CONTRIBUTOR only)
-// body: { content }
-// -----------------------------
+
 router.post("/:id/messages", authRequired, async (req, res) => {
   try {
     const capsuleId = Number(req.params.id);
@@ -216,9 +206,7 @@ router.post("/:id/messages", authRequired, async (req, res) => {
   }
 });
 
-// -----------------------------
 // GET /capsules/:id (debug)
-// -----------------------------
 router.get("/:id", authRequired, async (req, res) => {
   try {
     const capsuleId = Number(req.params.id);
@@ -238,9 +226,7 @@ router.get("/:id", authRequired, async (req, res) => {
   }
 });
 
-// -----------------------------
 // GET /capsules/:id/messages
-// -----------------------------
 router.get("/:id/messages", authRequired, async (req, res) => {
   try {
     const capsuleId = Number(req.params.id);

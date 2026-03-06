@@ -2,18 +2,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-
 import '../../models/user.dart';
 
 class AuthService {
 
-  /// ⚠️ Android Emulator => 10.0.2.2
   static const String _baseUrl = "http://10.0.2.2:3000";
-
   static const _storage = FlutterSecureStorage();
   static const _kTokenKey = "auth_token";
-
-  /// timeout global réseau
   static const Duration _timeout = Duration(seconds: 8);
 
   Map<String, String> _headers({String? token}) => {
@@ -29,9 +24,6 @@ class AuthService {
     }
   }
 
-  // =============================
-  // Local Token
-  // =============================
 
   Future<String?> readToken() async {
     final token = await _storage.read(key: _kTokenKey);
@@ -47,11 +39,9 @@ class AuthService {
     await _storage.delete(key: _kTokenKey);
   }
 
-  // =============================
   // API CALLS
-  // =============================
 
-  /// Validate token + current user
+  // Validate token + current user
   Future<User> me({required String token}) async {
     debugPrint("CALL /auth/me");
 

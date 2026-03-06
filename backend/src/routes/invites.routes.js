@@ -14,10 +14,8 @@ router.post("/:token/accept", authRequired, async (req, res) => {
     }
 
     const userId = req.user.userId;
+    // get user by id
 
-    // ---------------------------
-    // récupérer utilisateur connecté
-    // ---------------------------
     const userRes = await pool.query(
       `SELECT id, email FROM app_user WHERE id=$1`,
       [userId]
@@ -30,9 +28,7 @@ router.post("/:token/accept", authRequired, async (req, res) => {
     const user = userRes.rows[0];
     const userEmail = user.email.toLowerCase();
 
-    // ---------------------------
-    // récupérer invitation
-    // ---------------------------
+    // get invite
     const inviteRes = await pool.query(
       `
       SELECT *
@@ -54,16 +50,14 @@ router.post("/:token/accept", authRequired, async (req, res) => {
       });
     }
 
-    // vérifier email correspond
+    // vérify email
     if (invite.email.toLowerCase() !== userEmail) {
       return res.status(403).json({
         error: "This invite is not for your email",
       });
     }
 
-    // ---------------------------
-    // créer membership capsule
-    // ---------------------------
+    // create member in capsule
     await pool.query(
       `
       INSERT INTO capsule_members
@@ -78,10 +72,7 @@ router.post("/:token/accept", authRequired, async (req, res) => {
         invite.role, // BENEFICIARY ou CONTRIBUTOR
       ]
     );
-
-    // ---------------------------
-    // marquer invite acceptée
-    // ---------------------------
+    // status accepted
     await pool.query(
       `
       UPDATE capsule_invites
@@ -104,7 +95,7 @@ router.post("/:token/accept", authRequired, async (req, res) => {
   }
 });
 
-// POST /invites/sync  -> convertit toutes les invites PENDING de mon email en membership
+// POST /invites/sync 
 router.post("/sync", authRequired, async (req, res) => {
   const userId = req.user.userId;
   const client = await pool.connect();
@@ -122,7 +113,6 @@ router.post("/sync", authRequired, async (req, res) => {
     }
     const email = String(userRes.rows[0].email || "").toLowerCase();
 
-    // lock les invites concernées
     const invRes = await client.query(
       `
       SELECT id, token, capsule_id, role
@@ -135,7 +125,6 @@ router.post("/sync", authRequired, async (req, res) => {
     let created = 0;
 
     for (const inv of invRes.rows) {
-      // crée membership
       await client.query(
         `
         INSERT INTO capsule_members (capsule_id, user_id, role, created_at)
@@ -145,7 +134,6 @@ router.post("/sync", authRequired, async (req, res) => {
         [inv.capsule_id, userId, inv.role]
       );
 
-      // marque acceptée
       await client.query(
         `
         UPDATE capsule_invites

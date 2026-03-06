@@ -5,6 +5,7 @@ class Capsule {
   final String? description;
   final DateTime unlockAt;
   final String requiredSky;
+  final String? memberRole;
 
   Capsule({
     required this.id,
@@ -13,6 +14,7 @@ class Capsule {
     this.description,
     required this.unlockAt,
     required this.requiredSky,
+    this.memberRole
   });
 
   factory Capsule.fromJson(Map<String, dynamic> json) => Capsule(
@@ -22,6 +24,7 @@ class Capsule {
     description: json['description'] as String?,
     unlockAt: DateTime.parse(json['unlock_at'] as String),
     requiredSky: json['required_sky'] as String,
+    memberRole: json['member_role'] as String?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -31,5 +34,21 @@ class Capsule {
     'description': description,
     'unlock_at': unlockAt.toIso8601String(),
     'required_sky': requiredSky,
+    'member_role':memberRole
   };
+
+  bool get canWrite => memberRole != "BENEFICIARY";
+
+  String get roleLabelFr {
+    switch (memberRole) {
+      case "OWNER":
+        return "créateur";
+      case "CONTRIBUTOR":
+        return "contributeur";
+      case "BENEFICIARY":
+        return "bénéficiaire";
+      default:
+        return "membre";
+    }
+  }
 }

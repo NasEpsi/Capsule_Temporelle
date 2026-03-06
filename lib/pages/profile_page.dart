@@ -16,9 +16,10 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     const bg = Color(0xFFF8F5F0);
 
-    // Données exemple
-    const userName = "Utilisateur";
-    const userEmail = "test@test.test";
+    final auth = context.watch<AuthProvider>();
+    final user = auth.user;
+    final userName = user?.name ?? "Utilisateur";
+    final userEmail = user?.email ?? "";
     final familyMembers = ["User1", "User2"];
 
     return Scaffold(
@@ -104,11 +105,10 @@ class ProfilePage extends StatelessWidget {
 
                   MyButton(
                     text: "Se déconnecter",
-                    onTap: () {
-                      // TODO: AuthService().logout()
-                    },
+                    onTap: () async {
+                        await context.read<AuthProvider>().logout();
+                      }
                   ),
-
                   const SizedBox(height: 100),
                 ],
               ),

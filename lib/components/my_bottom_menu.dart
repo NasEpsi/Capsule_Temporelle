@@ -1,4 +1,4 @@
-import 'package:capsule_emporelle_flutter/pages/create_capsule_page.dart';
+
 import 'package:flutter/material.dart';
 
 // importation des pages

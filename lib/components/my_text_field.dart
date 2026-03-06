@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String title;
-  final String subtitle;
   final String hintText;
   final bool obscureText;
 
@@ -11,7 +10,6 @@ class MyTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.title,
-    required this.subtitle,
     required this.hintText,
     required this.obscureText,
   });
@@ -19,7 +17,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderColor =
-    const Color(0xA6FF8D28);
+    const Color(0xFFFF8D28).withOpacity(0.65);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,18 +31,7 @@ class MyTextField extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 5),
-
-        // Sous-titre
-        Text(
-          subtitle,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0x99000000),
-          ),
-        ),
-
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
 
         // Champ texte
         TextField(
@@ -60,8 +47,8 @@ class MyTextField extends StatelessWidget {
             fillColor: const Color(0xFFFFFFFF),
 
             hintText: hintText,
-            hintStyle: const TextStyle(
-              color: Color(0x66000000),
+            hintStyle: TextStyle(
+              color: Color(0xFF000000).withOpacity(0.4),
             ),
 
             enabledBorder: OutlineInputBorder(
@@ -74,8 +61,8 @@ class MyTextField extends StatelessWidget {
 
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
-              borderSide: const BorderSide(
-                color: Color(0xA6FF8D28),
+              borderSide: BorderSide(
+                color: const Color(0xFFFF8D28).withOpacity(0.65),
                 width: 1.5,
               ),
             ),

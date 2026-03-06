@@ -12,7 +12,7 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const buttonColor = Color(0xA6FF8D28);
+    final buttonColor = const Color(0xFFFF8D28).withOpacity(0.65);
 
     return GestureDetector(
       onTap: onTap,
